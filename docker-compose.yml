@@ -2,7 +2,7 @@
 
 # # windows用
 # services:
-#   app2:
+#   app:
 #     build:
 #       dockerfile: Dockerfile
 #       context: .
@@ -52,10 +52,10 @@
 #         # mac
 #         # source: $HOME/.Xauthority  # X11認証情報のマウント
 #         # target: /root/.Xauthority  # コンテナ内での位置
-#     ports:
-#       - "1420:1420"
-#       - "3000:3000"
-#       - "8080:8080"
+#     # ports:
+#       # - "1420:1420"
+#       # - "3000:3000"
+#       # - "8080:8080"
 #       # windows Waylandソケットをマウント（Waylandでのディスプレイ用）
 #       # - type: bind
 #       #   source: "${XDG_RUNTIME_DIR}/wayland-0"
@@ -65,7 +65,7 @@
 
 # mac用
 services:
-  app2:
+  app:
     build:
       dockerfile: Dockerfile
       context: .
@@ -115,10 +115,10 @@ services:
         # mac
         source: $HOME/.Xauthority  # X11認証情報のマウント
         target: /root/.Xauthority  # コンテナ内での位置
-    ports:
-      - "1420:1420"
-      - "3000:3000"
-      - "8080:8080"
+    # ports:
+      # - "1420:1420"
+      # - "3000:3000"
+      # - "8080:8080"
       # windows Waylandソケットをマウント（Waylandでのディスプレイ用）
       # - type: bind
       #   source: "${XDG_RUNTIME_DIR}/wayland-0"
