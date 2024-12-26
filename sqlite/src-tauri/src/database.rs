@@ -2,7 +2,7 @@
 use rusqlite::Connection;
 
 // データベースファイル
-const TAURI_DB: &str = "./sqlite.db";
+const TAURI_DB: &str = "../sqlite.db";
 
 pub fn init() -> Result<(),String> {
     create_user_table()?;
@@ -16,7 +16,7 @@ pub fn init() -> Result<(),String> {
 fn create_user_table() -> Result<String,String> {
     let connection = Connection::open(TAURI_DB).map_err(|e| e.to_string())?;
     let query = "
-        CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL UNIQUE, email TEXT, API TEXT);
+        CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL UNIQUE, email TEXT, api TEXT);
     ";
 
     connection.execute(query,[]).map_err(|e| e.to_string())?;

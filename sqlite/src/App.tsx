@@ -4,6 +4,7 @@ import { invoke } from "@tauri-apps/api/core";
 import "./App.css";
 import "./style.css";
 import SignupForm from "./components/Form/SignupForm";
+import CustomAlert from "./components/Alert/CustomAlert";
 
 interface User {
   name: string;
@@ -21,6 +22,8 @@ interface Data {
 const App: React.FunctionComponent = () => {
   const [user, setUser] = useState<User | null>(null);
   const [data, setData] = useState<Data[]>([]);
+  const [showAlert, setShowAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState(""); 
 
 
   useEffect(() => {
@@ -39,8 +42,10 @@ const App: React.FunctionComponent = () => {
     try {
       const response: Data[] = await invoke("get_data");
       setData(response);
-    } catch(error){
+    } catch(error: any){
       console.error(error);
+      setAlertMessage(error.toString());
+      setShowAlert(true);
     }
   }
 
@@ -53,9 +58,14 @@ const App: React.FunctionComponent = () => {
       setData(mockData);
     }
   }, []);
+
+  const handleCloseAlert = () => {
+    setShowAlert(false);
+  }
   
   return (
     <main className="container">
+      {showAlert && <CustomAlert message={alertMessage} onClose={handleCloseAlert} />}
       <h1>Welcome to Tauri + React + Sqlite</h1>
 
       {user && (
@@ -66,7 +76,7 @@ const App: React.FunctionComponent = () => {
         </div>
       )}
 
-      <SignupForm />
+      <SignupForm setShowAlert={setShowAlert} setAlertMessage={setAlertMessage} />
 
       <table>
         <thead>

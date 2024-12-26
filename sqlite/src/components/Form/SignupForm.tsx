@@ -1,5 +1,6 @@
 import React, { useRef } from 'react';
 import { invoke } from "@tauri-apps/api/core";
+import "./SignupForm.css";
 
 interface User {
     name: string;
@@ -7,14 +8,20 @@ interface User {
     API: string;
 }
 
-const SignupForm: React.FunctionComponent = () => {
+interface Props{
+    setShowAlert: (show: boolean) => void;
+    setAlertMessage: (message: string) => void;
+}
+
+const SignupForm: React.FunctionComponent<Props> = ({ setShowAlert, setAlertMessage }) => {
     const nameRef = useRef<HTMLInputElement>(null);
     const emailRef = useRef<HTMLInputElement>(null);
     const APIRef = useRef<HTMLInputElement>(null);
 
-    const handleSignup = async() => {
+    const handleSignup = async () => {
         if (!nameRef.current?.value){
-            alert("名前を入力してください。");
+            setAlertMessage("名前を入力してください。");
+            setShowAlert(true);
             return;
         }
         
@@ -22,7 +29,7 @@ const SignupForm: React.FunctionComponent = () => {
             const result = await invoke('signup_user', {
                 name: nameRef.current.value,
                 email: emailRef.current?.value || "",
-                API: APIRef.current?.value || "",
+                api: APIRef.current?.value || "",
             })
             console.log(result);
             const user: User = {
@@ -31,27 +38,31 @@ const SignupForm: React.FunctionComponent = () => {
                 API: APIRef.current?.value || "",
             } 
             saveUser(user);
-            
-        } catch(error) {
+
+        } catch(error: any) {
             console.error(error);
-            alert(error);
+            setAlertMessage(error.toString());
+            setShowAlert(true);
         }
     };
 
     const saveUser = (user: User) => {
         localStorage.setItem("currentUser", JSON.stringify(user));
-        alert("ユーザーが登録されました。");
+        setAlertMessage(user.name + "が登録されました。");
+        setShowAlert(true);
     };
 
     return (
         <div>
-            <label htmlFor="name">名前</label>
-            <input type='text' id="name" ref={nameRef} required></input>
-            <label htmlFor="email">メール（必須ではありません）</label>
-            <input type='text' id="email" ref={emailRef}></input>
-            <label htmlFor="API">API（必須ではありません）</label>
-            <input type='text' id="API" ref={APIRef}></input>
-            <button onClick={handleSignup}>登録</button>
+            <div className='form-container'>
+                <label htmlFor="name">名前</label>
+                <input type='text' id="name" ref={nameRef} required></input>
+                <label htmlFor="email">メール（必須ではありません）</label>
+                <input type='text' id="email" ref={emailRef}></input>
+                <label htmlFor="API">API（必須ではありません）</label>
+                <input type='text' id="API" ref={APIRef}></input>
+                <button onClick={handleSignup}>登録</button>
+            </div>
         </div>
     )
 };
