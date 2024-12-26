@@ -3,6 +3,13 @@ import reactLogo from "./assets/react.svg";
 import { invoke } from "@tauri-apps/api/core";
 import "./App.css";
 import "./style.css";
+import SignupForm from "./components/Form/SignupForm";
+
+interface User {
+  name: string;
+  email: string;
+  API: string;
+}
 
 interface Data {
   id: number;
@@ -12,7 +19,16 @@ interface Data {
 }
 
 function App() {
+  const [user, setUser] = useState<User | null>(null);
   const [data, setData] = useState<Data[]>([]);
+
+
+  useEffect(() => {
+    const currentUser = localStorage.getItem("currentUser");
+    if (currentUser) {
+        setUser(JSON.parse(currentUser));
+    }
+  }, []);
 
 
   useEffect(() => {
@@ -41,6 +57,16 @@ function App() {
   return (
     <main className="container">
       <h1>Welcome to Tauri + React + Sqlite</h1>
+
+      {user && (
+        <div>
+          <h2>
+            あなたの名前は{user.name}です。
+          </h2>
+        </div>
+      )}
+
+      <SignupForm />
 
       <table>
         <thead>
