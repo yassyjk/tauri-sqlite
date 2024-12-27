@@ -2,7 +2,7 @@
 use rusqlite::Connection;
 
 // データベースファイル
-const TAURI_DB: &str = "../sqlite.db";
+const TAURI_DB: &str = "../../sqlite.db";
 
 pub fn init() -> Result<(),String> {
     create_user_table()?;
