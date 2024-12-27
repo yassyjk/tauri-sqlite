@@ -1,0 +1,13 @@
+
+.form-container {
+    display: flex;
+    flex-direction: column; /* 縦に並べる */
+    gap: 10px; /* 各要素の間隔 */
+    width: 80%;
+    justify-content: center;
+    align-items: center;
+}
+
+label {
+    margin-bottom: 5px; /* ラベルと入力フィールドの間隔 */
+}

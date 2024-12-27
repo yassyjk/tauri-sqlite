@@ -5,8 +5,15 @@
 .logo.react:hover {
   filter: drop-shadow(0 0 2em #61dafb);
 }
+
+@font-face {
+  font-family: "BIZUDPGothic-Regular";
+  src: url("./assets/fonts/BIZUDPGothic-Regular.ttf");
+  font-display: swap;
+}
+
 :root {
-  font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
+  font-family: "BIZUDPGothic-Regular", noto-sans-jp, Inter, Avenir, Helvetica, Arial, sans-serif;
   font-size: 16px;
   line-height: 24px;
   font-weight: 400;

@@ -46,7 +46,7 @@ RUN apt-get update && apt-get install -y \
     libwebkit2gtk-4.1-dev
 
 # OpenGLのライブラリをインストール 
-RUN apt-get install -y libgl1-mesa-glx libgl1-mesa-dri
+RUN apt-get install -y mesa-utils libgl1-mesa-glx libgl1-mesa-dri
 
 # ソフトウェアレンダリングを強制
 ENV LIBGL_ALWAYS_SOFTWARE=1  
